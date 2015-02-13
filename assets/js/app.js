@@ -1,5 +1,5 @@
 /* ADDED for mike's spots*/
-var map, featureList, boroughSearch = [], theaterSearch = [], museumSearch = [], spotsSearch = [];
+var map, featureList, boroughSearch = [], theaterSearch = [], museumSearch = [], spotSearch = [];
 
 $(document).on("click", ".feature-row", function(e) {
   $(document).off("mouseout", ".feature-row", clearHighlight);
@@ -97,7 +97,7 @@ function syncSidebar() {
    spots.eachLayer(function (layer) {
     if (map.hasLayer(spotLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/smiley_face"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/smiley_face.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -395,11 +395,11 @@ var spots = L.geoJson(null, {
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/museum.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
-      museumSearch.push({
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/smiley_face.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      spotSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
-        source: "Spots",
+        source: "spots",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -409,7 +409,7 @@ var spots = L.geoJson(null, {
 });
 /* ADDED for mike's spots */
 $.getJSON("data/mike_sites.geojson", function (data) {
-  museums.addData(data);
+  spots.addData(data);
 });
 
 map = L.map("map", {
@@ -604,6 +604,17 @@ $(document).one("ajaxStop", function () {
     limit: 10
   });
 
+  /* ADDED for mike's spots */
+  var spotsBH = new Bloodhound({
+    name: "Spots",
+    datumTokenizer: function (d) {
+      return Bloodhound.tokenizers.whitespace(d.name);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: spotSearch,
+    limit: 10
+  });
+  
   var geonamesBH = new Bloodhound({
     name: "GeoNames",
     datumTokenizer: function (d) {
@@ -637,6 +648,8 @@ $(document).one("ajaxStop", function () {
   boroughsBH.initialize();
   theatersBH.initialize();
   museumsBH.initialize();
+  /* ADDED for mike's spots */
+  spotsBH.initialize();
   geonamesBH.initialize();
 
   /* instantiate the typeahead UI */
@@ -668,6 +681,14 @@ $(document).one("ajaxStop", function () {
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {
+    name: "Spots",
+    displayKey: "name",
+    source: spotsBH.ttAdapter(),
+    templates: {
+      header: "<h4 class='typeahead-header'><img src='assets/img/smiley_face.png' width='24' height='28'>&nbsp;Spots</h4>",
+      suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
+    }
+  }, {
     name: "GeoNames",
     displayKey: "name",
     source: geonamesBH.ttAdapter(),
@@ -690,6 +711,15 @@ $(document).one("ajaxStop", function () {
     if (datum.source === "Museums") {
       if (!map.hasLayer(museumLayer)) {
         map.addLayer(museumLayer);
+      }
+      map.setView([datum.lat, datum.lng], 17);
+      if (map._layers[datum.id]) {
+        map._layers[datum.id].fire("click");
+      }
+    }
+	if (datum.source === "Spots") {
+      if (!map.hasLayer(spotLayer)) {
+        map.addLayer(spotLayer);
       }
       map.setView([datum.lat, datum.lng], 17);
       if (map._layers[datum.id]) {
