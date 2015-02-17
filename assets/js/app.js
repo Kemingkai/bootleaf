@@ -18,11 +18,26 @@ $("#about-btn").click(function() {
   return false;
 });
 
+
+/* ADDED to fit bounds outside NYC, used Augusta Cordinate #1, San Deig Coordinate #2 */
+$("#full-extent-btn").click(function() {
+  map.fitBounds([
+  [44.310532, -69.77933],
+  [32.445694,-117.039503]
+  ]);
+  $(".navbar-collapse.in").collapse("hide");
+  return false;
+});
+
+/*
+// Original code fitting bounds to boroughs 
 $("#full-extent-btn").click(function() {
   map.fitBounds(boroughs.getBounds());
   $(".navbar-collapse.in").collapse("hide");
   return false;
 });
+*/
+
 
 $("#legend-btn").click(function() {
   $("#legendModal").modal("show");
@@ -73,6 +88,7 @@ function sidebarClick(id) {
   }
 }
 
+
 function syncSidebar() {
   /* Empty sidebar features */
   $("#feature-list tbody").empty();
@@ -84,6 +100,10 @@ function syncSidebar() {
       }
     }
   });
+  
+//Test to print map bounds
+console.log(map.getBounds());
+
   /* Loop through museum layer and add only features which are in the map bounds */
   museums.eachLayer(function (layer) {
     if (map.hasLayer(museumLayer)) {
@@ -97,10 +117,12 @@ function syncSidebar() {
    spots.eachLayer(function (layer) {
     if (map.hasLayer(spotLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/smiley_face.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/blue_bucket.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
+  
+  
   /* Update list.js featureList */
   featureList = new List("features", {
     valueNames: ["feature-name"]
@@ -375,7 +397,7 @@ var spots = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/smiley_face.png",
+        iconUrl: "assets/img/blue_bucket.png",
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -395,7 +417,7 @@ var spots = L.geoJson(null, {
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/smiley_face.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/blue_bucket.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       spotSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
@@ -538,7 +560,7 @@ var groupedOverlays = {
   "Points of Interest": {
     "<img src='assets/img/theater.png' width='24' height='28'>&nbsp;Theaters": theaterLayer,
     "<img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums": museumLayer,
-	"<img src='assets/img/smiley_face.png' width='24' height='28'>&nbsp;Spots": spotLayer
+	"<img src='assets/img/blue_bucket.png' width='24' height='28'>&nbsp;Spots": spotLayer
   },
   "Reference": {
     "Boroughs": boroughs,
@@ -569,8 +591,11 @@ $("#featureModal").on("hidden.bs.modal", function (e) {
 /* Typeahead search functionality */
 $(document).one("ajaxStop", function () {
   $("#loading").hide();
-  /* Fit map to boroughs bounds */
-  map.fitBounds(boroughs.getBounds());
+  /* Fit map to boroughs bounds old argument for fitBounds: boroughs.getBounds() */
+  map.fitBounds([
+  [44.310532, -69.77933],
+  [32.445694,-117.039503]
+  ]);
   featureList = new List("features", {valueNames: ["feature-name"]});
   featureList.sort("feature-name", {order:"asc"});
 
@@ -685,7 +710,7 @@ $(document).one("ajaxStop", function () {
     displayKey: "name",
     source: spotsBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/smiley_face.png' width='24' height='28'>&nbsp;Spots</h4>",
+      header: "<h4 class='typeahead-header'><img src='assets/img/blue_bucket.png' width='24' height='28'>&nbsp;Spots</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {

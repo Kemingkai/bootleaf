@@ -3,6 +3,21 @@
                                                                                 
 "features": [
 { "type": "Feature", "id": 0, "properties": { "NAME": "Mike's Spot #1", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -74.013756, 40.703817 ] } }
-
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Mike's House", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -122.432812, 37.749846 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Hog Island Oyster Farm", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -122.89277, 38.16317 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Yosemite National Park", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -119.5743357, 37.746154 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Santa Cruz", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -122.029426, 36.97461 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Big Sur", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -121.807976, 36.2704212 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Pasa Robles", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -120.653889, 35.640833 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Hearst Castle", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -121.1682251, 35.6852076 ] } }
+,
+{ "type": "Feature", "id": 0, "properties": { "NAME": "Los Angeles", "TEL": "(212) 514-3700", "URL": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "1 Bowling Grn", "ADDRESS2": null, "CITY": "New York", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ -118.2436849, 34.0522342 ] } }
 ]
 }
